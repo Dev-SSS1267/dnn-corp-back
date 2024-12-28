@@ -1,20 +1,20 @@
 const express = require("express");
 const router = express.Router();
-const { getNotices, addNotice, getNotice, updateNotice, deleteNotice } = require("../controllers/noticeController");
+const { getAnnounces, addAnnounce, getAnnounce, updateAnnounce, deleteAnnounce } = require("../controllers/announceController");
 
 // 공지 가져오기
-router.get("/", getNotices);
+router.get("/", getAnnounces);
 
 // 공지 추가 (관리자만)
-router.post("/", addNotice);
+router.post("/", addAnnounce);
 
 // 공지 수정 (관리자만)
-router.put("/:id", updateNotice);
+router.put("/:id", updateAnnounce);
 
 // 특정 공지사항 조회
- router.get("/:id", getNotice);
+ router.get("/:id", getAnnounce);
 
 // 공지 삭제 (관리자만)
-router.delete("/:id", deleteNotice);
+router.delete("/:id", deleteAnnounce);
 
 module.exports = router;

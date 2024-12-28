@@ -3,8 +3,8 @@ const Announce = require("../models/Announce");
 // 모든 공지사항 조회
 exports.getAnnounces = async (req, res) => {
   try {
-    const notices = await Announce.find().sort({ createDate: -1 });
-    res.json(notices);
+    const announces = await Announce.find().sort({ createDate: -1 });
+    res.json(announces);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -26,9 +26,9 @@ exports.addAnnounce = async (req, res) => {
 exports.getAnnounce = async (req, res) => {
   const { id } = req.params;
   try {
-    const notice = await Announce.findById(id);
-    if (!notice) return res.status(404).json({ message: "Announce not found" });
-    res.json(notice);
+    const announce = await Announce.findById(id);
+    if (!announce) return res.status(404).json({ message: "Announce not found" });
+    res.json(announce);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -40,16 +40,16 @@ exports.updateAnnounce = async (req, res) => {
   const { title, content, img } = req.body;
 
   try {
-    const notice = await Announce.findById(id);
-    if (!notice) return res.status(404).json({ message: "Announce not found" });
+    const announce = await Announce.findById(id);
+    if (!announce) return res.status(404).json({ message: "Announce not found" });
 
-    if (title) notice.title = title;
-    if (content) notice.content = content;
-    if (img) notice.img = img;
-    notice.createDate = Date.now();
+    if (title) announce.title = title;
+    if (content) announce.content = content;
+    if (img) announce.img = img;
+    announce.createDate = Date.now();
 
-    await notice.save();
-    res.json(notice);
+    await announce.save();
+    res.json(announce);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -58,10 +58,10 @@ exports.updateAnnounce = async (req, res) => {
 //공지사항 삭제
 exports.deleteAnnounce = async (req, res) => {
   try {
-    const noticeId = req.params.id;
+    const announceId = req.params.id;
 
     // 공지사항 삭제
-    const deletedAnnounce = await Announce.findByIdAndDelete(noticeId);
+    const deletedAnnounce = await Announce.findByIdAndDelete(announceId);
 
     if (!deletedAnnounce) {
       return res.status(404).json({ message: "Announce not found" });
@@ -69,7 +69,7 @@ exports.deleteAnnounce = async (req, res) => {
 
     res.status(200).json({ message: "Announce deleted successfully" });
   } catch (error) {
-    console.error("Error deleting notice:", error); // 오류 로그 출력
+    console.error("Error deleting announce:", error); // 오류 로그 출력
     res.status(500).json({ message: "Internal Server Error" });
   }
 };

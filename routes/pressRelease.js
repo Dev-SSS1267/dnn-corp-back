@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { getPressReleases, addPressRelease, getPressRelease, updatePressRelease, deletePressRelease } = require("../controllers/pressReleaseController");
+const { getPressRelease, addPressRelease, getPressRelease, updatePressRelease, deletePressRelease } = require("/controllers/pressReleaseController");
 
 // 공지 가져오기
-router.get("/", getPressReleases);
+router.get("/", getPressRelease);
 
 // 공지 추가 (관리자만)
 router.post("/", addPressRelease);
