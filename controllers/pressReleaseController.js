@@ -1,7 +1,7 @@
 const PressRelease = require("../models/PressRelease");
 
 // 모든 공지사항 조회
-exports.getPressRelease = async (req, res) => {
+exports.getPressReleases = async (req, res) => {
   try {
     const pressreleases = await PressRelease.find().sort({ createDate: -1 });
     res.json(pressreleases);
