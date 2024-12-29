@@ -18,3 +18,12 @@ exports.isAdmin = (req, res, next) => {
   if (!req.user.isAdmin) return res.status(403).json({ message: "Access forbidden" });
   next();
 };
+
+exports.isTokenValid = (token) => {
+  try {
+    jwt.verify(token, process.env.JWT_SECRET);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}

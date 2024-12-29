@@ -5,6 +5,7 @@ import authRoutes from "./routes/authRoutes";
 import noticeRoutes from "./routes/noticeRoutes";
 import pressRelease from "./routes/pressRelease";
 import announceRoutes from "./routes/announceRoutes";
+import { isTokenValid } from "./middleware/authMiddleware";
 
 import cors from "cors";
 
@@ -33,6 +34,14 @@ app.use("/api/auth", authRoutes);
 app.use("/api/notices", noticeRoutes);
 app.use("/api/prs", pressRelease);
 app.use("/api/ans", announceRoutes); // 문의 라우트 추가
+
+app.use((req, res, next) => {
+  const token = req.headers.authorization?.split(" ")[1]; // Bearer 토큰 파싱
+  if (!token || !isTokenValid(token)) { // 유효성 검사
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+  next();
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
