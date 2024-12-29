@@ -3,7 +3,7 @@ import connectDB from "./config/db";
 import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes";
 import noticeRoutes from "./routes/noticeRoutes";
-import pressreleaseRoutes from "./routes/pressreleaseRoutes";
+import pressRelease from "./routes/pressRelease";
 import announceRoutes from "./routes/announceRoutes";
 
 import cors from "cors";
@@ -31,7 +31,7 @@ connectDB();
 
 app.use("/api/auth", authRoutes);
 app.use("/api/notices", noticeRoutes);
-app.use("/api/prs", pressreleaseRoutes);
+app.use("/api/prs", pressRelease);
 app.use("/api/ans", announceRoutes); // 문의 라우트 추가
 
 const PORT = process.env.PORT || 3000;
