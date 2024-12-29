@@ -33,6 +33,10 @@ connectDB();
 app.use("/api/auth", authRoutes);
 
 app.use((req, res, next) => {
+  if (req.method === "GET") {
+    return next();
+  }
+  
   const token = req.headers.authorization?.split(" ")[1]; // Bearer 토큰 파싱
   if (!token || !isTokenValid(token)) { // 유효성 검사
     return res.status(401).json({ error: "Unauthorized" });
