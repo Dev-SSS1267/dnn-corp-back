@@ -31,9 +31,6 @@ connectDB();
 
 
 app.use("/api/auth", authRoutes);
-app.use("/api/notices", noticeRoutes);
-app.use("/api/prs", pressRelease);
-app.use("/api/ans", announceRoutes); // 문의 라우트 추가
 
 app.use((req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1]; // Bearer 토큰 파싱
@@ -42,6 +39,11 @@ app.use((req, res, next) => {
   }
   next();
 });
+
+app.use("/api/notices", noticeRoutes);
+app.use("/api/prs", pressRelease);
+app.use("/api/ans", announceRoutes); // 문의 라우트 추가
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
