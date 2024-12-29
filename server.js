@@ -12,7 +12,7 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:5173",   // 로컬 개발 서버
-  "https://khbs.kyunggi.club", // 실제 배포 URL
+  "https://dnn-corp.pages.dev", // 실제 배포 URL
   "*"
 ];
 
