@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 // 회원가입
 exports.register = async (req, res) => {
@@ -27,9 +28,11 @@ exports.login = async (req, res) => {
     const user = await User.findOne({ username });
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    const isMatch = await user.comparePassword(password);
-    if (!isMatch)
+    // 비번 비교
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    if (!isPasswordCorrect) {
       return res.status(400).json({ message: "Invalid credentials" });
+    }
 
     const token = jwt.sign(
       { userId: user._id, isAdmin: user.isAdmin },

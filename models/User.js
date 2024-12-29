@@ -14,9 +14,5 @@ UserSchema.pre("save", async function (next) {
   next();
 });
 
-// 비밀번호 비교 메서드
-UserSchema.methods.comparePassword = async function (password) {
-  return await bcrypt.compare(password, this.password);
-};
 
 module.exports = mongoose.model("User", UserSchema);
