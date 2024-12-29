@@ -9,14 +9,14 @@ exports.register = async (req, res) => {
   try {
     const existingUser = await User.findOne({ username });
     if (existingUser)
-      return res.status(400).json({ message: "User already exists" });
+      return res.status(400).json({ message: "User already exists", success: false });
 
     const user = new User({ username, password, isAdmin });
     await user.save();
 
-    res.status(201).json({ message: "User registered successfully" });
+    res.status(201).json({ message: "User registered successfully", success: true });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: error.message, success: false });
   }
 };
 
@@ -26,12 +26,12 @@ exports.login = async (req, res) => {
 
   try {
     const user = await User.findOne({ username });
-    if (!user) return res.status(404).json({ message: "User not found" });
+    if (!user) return res.status(404).json({ message: "User not found", success: false });
 
     // 비번 비교
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
     if (!isPasswordCorrect) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(400).json({ message: "Invalid credentials", success: false });
     }
 
     const token = jwt.sign(
@@ -42,9 +42,13 @@ exports.login = async (req, res) => {
       }
     );
 
-    res.json({ token });
+    res.json({ 
+      token,
+      message: "User logged in successfully",
+      success: true,
+     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: error.message, success: false });
   }
 };
 
